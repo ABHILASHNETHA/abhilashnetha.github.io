@@ -1,128 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857817753344908"
-     crossorigin="anonymous"></script>-->
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-65BFHZ9N1T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Gold Rate</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #ffdf00, #ffd700);
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
+    #gold-rate {
+      font-size: 2em;
+      color: #000;
+      background: #fff;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      animation: glow 1.5s infinite;
+    }
+    footer {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #fff;
+    }
 
-  gtag('config', 'G-65BFHZ9N1T');
-</script>
-    <title>Feet & Inches Calculator</title>
-    <style>
-        /* General Body Styling */
-        body {
-            font-family: Arial, sans-serif;
-            width: 300px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            /* Light background color */
-            border-radius: 10px;
-            /* Rounded corners */
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            /* Soft shadow for depth */
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        /* Title Styling */
-        h3 {
-            color: #000000;
-            /* Darker color for contrast */
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-        /* Label Styling */
-        label {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            text-align: left;
-            margin-top: 10px;
-        }
-
-        /* Input Styling */
-        input,
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #2e00fc;
-            border-radius: 5px;
-            font-size: 14px;
-            box-sizing: border-box;
-            background-color: #fff;
-        }
-
-        /* Button Styling */
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #007bff;
-            /* Primary button color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #21f006;
-            /* Darker on hover */
-        }
-
-        /* Result Styling */
-        #result {
-            font-size: 30px;
-            color: #007bff;
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #e9f7ff;
-            /* Light background for result */
-            border: 2px solid #007bff;
-            border-radius: 5px;
-        }
-    </style>
+    /* Animations */
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 10px #ffd700;
+      }
+      50% {
+        box-shadow: 0 0 20px #ffd700;
+      }
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <h3>Feet & Inches Calculator</h3>
+  <div class="container">
+    <h1>Live Gold Rate</h1>
+    <p>Current gold price per ounce:</p>
+    <div id="gold-rate">Fetching...</div>
+  </div>
+  <footer>
+    Updated every minute. Data fetched from a live source.
+  </footer>
 
-    <!-- Input Fields for Measurements -->
-    <label>First Measurement:</label>
-    <input type="number" id="feet1" placeholder="Feet">
-    <input type="number" id="inches1" placeholder="Inches">
+  <script>
+   const apiUrl = "https://www.goldapi.io/api/XAU/USD";
 
-    <label>Second Measurement:</label>
-    <input type="number" id="feet2" placeholder="Feet">
-    <input type="number" id="inches2" placeholder="Inches">
+async function fetchGoldRate() {
+  try {
+    const response = await fetch(apiUrl, {
+      headers: { "x-access-token": "goldapi-5pw6hsm44fbq09-io" }
+    });
+    const data = await response.json();
+    const goldRate = data.price;
+    document.getElementById('gold-rate').textContent = `$${goldRate.toFixed(2)} USD`;
+  } catch (error) {
+    document.getElementById('gold-rate').textContent = "Error fetching data!";
+    console.error("Error fetching gold rate:", error);
+  }
+}
+fetchGoldRate();
+setInterval(fetchGoldRate, 60000);
 
-    <!-- Dropdown for Selecting Operation -->
-    <label>Operation:</label>
-    <select id="operation">
-        <option value="subtract">Subtract</option>
-        <option value="add">Add</option>
-    </select>
-
-    <!-- Calculate Button -->
-    <button id="calculate">Calculate</button>
-
-    <!-- Result Display -->
-    <div id="result"></div>
-
-    <script src="extesnion.js"></script>
+  </script>
 </body>
-
-</html> 
-
+</html>
