@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857817753344908"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Gold Rate</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857817753344908" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -14,6 +14,26 @@
       background: linear-gradient(45deg, #ffdf00, #ffd700);
       color: #333;
       text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px;
+      background: #333;
+      margin: 0;
+    }
+    nav ul li {
+      display: inline;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
     }
     .container {
       padding: 20px;
@@ -38,8 +58,6 @@
       font-size: 0.9em;
       color: #fff;
     }
-
-    /* Animations */
     @keyframes glow {
       0%, 100% {
         box-shadow: 0 0 10px #ffd700;
@@ -59,34 +77,54 @@
   </style>
 </head>
 <body>
+  <!-- Google AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8857817753344908" crossorigin="anonymous"></script>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
   <div class="container">
     <h1>Live Gold Rate</h1>
     <p>Current gold price per ounce:</p>
     <div id="gold-rate">Fetching...</div>
   </div>
+
   <footer>
     Updated every minute. Data fetched from a live source.
   </footer>
 
   <script>
-   const apiUrl = "https://www.goldapi.io/api/XAU/USD";
+    const apiUrl = "https://www.goldapi.io/api/XAU/USD";
 
-async function fetchGoldRate() {
-  try {
-    const response = await fetch(apiUrl, {
-      headers: { "x-access-token": "goldapi-5pw6hsm44fbq09-io" }
-    });
-    const data = await response.json();
-    const goldRate = data.price;
-    document.getElementById('gold-rate').textContent = `$${goldRate.toFixed(2)} USD`;
-  } catch (error) {
-    document.getElementById('gold-rate').textContent = "Error fetching data!";
-    console.error("Error fetching gold rate:", error);
-  }
-}
-fetchGoldRate();
-setInterval(fetchGoldRate, 60000);
+    async function fetchGoldRate() {
+      try {
+        const response = await fetch(apiUrl, {
+          headers: { "x-access-token": "goldapi-5pw6hsm44fbq09-io" }
+        });
 
+        if (!response.ok) {
+          throw new Error("API Error: " + response.status);
+        }
+
+        const data = await response.json();
+        const goldRate = data.price;
+        document.getElementById('gold-rate').textContent = `$${goldRate.toFixed(2)} USD`;
+      } catch (error) {
+        document.getElementById('gold-rate').textContent = "Error fetching data!";
+        console.error("Error fetching gold rate:", error);
+      }
+    }
+
+    fetchGoldRate();
+    setInterval(fetchGoldRate, 60000);
   </script>
 </body>
 </html>
